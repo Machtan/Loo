@@ -4,15 +4,19 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     public float move_speed = 1.0f;
-    public Sprite stand;
+    public float broom_attack_cooldown = 0.5f;
+    public float attack_cooldown_remaining = 0.0f;
+    //public Sprite stand;
 
     protected float vx = 0.0f;
     protected float vy = 0.0f;
     protected new SpriteRenderer renderer;
+    protected Animator animator;
 
 	// Use this for initialization
 	void Start () {
         renderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         transform.up = Vector3.left;
 	}
         
@@ -95,22 +99,30 @@ public class Player : MonoBehaviour {
             }
         }
 
+        // Attack
+        if (attack_cooldown_remaining > 0) {
+            attack_cooldown_remaining -= Time.deltaTime;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if (attack_cooldown_remaining <= 0) {
+                animator.SetBool("broom_attack", true);
+                //Debug.Log("ATTACK!");
+            }
+        }
+
         float delta = Time.deltaTime;
         transform.position += new Vector3(vx * delta, vy * delta, 0);
 
-        // Dynamic direction setting
-        if (Mathf.Abs(vx) > Mathf.Abs(vy)) {
-            if (vx > 0) {
-                transform.up = Vector3.right;
-            } else if (vx < 0){
-                transform.up = Vector3.left;
+        if (vx != 0 || vy != 0) {
+            transform.up = new Vector3(vx, vy, 0);
+            if (! animator.GetBool("moving")) {
+                //Debug.Log("MOVING!!!!");
+                animator.SetBool("moving", true);
             }
         } else {
-            if (vy > 0) {
-                transform.up = Vector3.up;
-            } else if (vy < 0){
-                transform.up = Vector3.down;
-            }
+            animator.SetBool("moving", false);
+            //Debug.Log("NOT MOVING!");
         }
 	}
 }
