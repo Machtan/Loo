@@ -48,7 +48,7 @@ public class CleanStall : MonoBehaviour {
             // Check that this is the stall the customer wants to enter
             GameObject destination = collider.gameObject.GetComponent<Customer>().destination;
             if (destination == gameObject) {
-                Debug.Log("CUSTOMER ENTERS CLEAN STALL!");
+                //Debug.Log("CUSTOMER ENTERS CLEAN STALL!");
                 GameObject.FindGameObjectWithTag("door").GetComponent<Door>().active -= 1;
                 customer = collider.gameObject;
                 customer_was_male = customer.GetComponent<Animator>().GetBool("is_male");

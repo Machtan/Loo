@@ -34,8 +34,8 @@ public class Player : MonoBehaviour {
     public float broom_push_force = 3;
     //public Sprite stand;
 
-    protected float vx = 0.0f;
-    protected float vy = 0.0f;
+    public float vx = 0.0f;
+    public float vy = 0.0f;
     protected new SpriteRenderer renderer;
     protected new Rigidbody2D rigidbody;
     protected Animator animator;
@@ -62,7 +62,6 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        handle_input();
 
         float delta = Time.deltaTime;
 
@@ -85,7 +84,7 @@ public class Player : MonoBehaviour {
         }
 	}
 
-    void on_attack() {
+    public void on_attack() {
         WeaponInfo info = weapon_info[weapon];
 
         // Prune dead objects
@@ -131,8 +130,9 @@ public class Player : MonoBehaviour {
                 break;
             }
         case Weapon.Vacuum: {
-                
+                Debug.Log("Vooooooooooooom");
                 if (info.customers_in_range.Count == 0) {
+                    Debug.Log("No customer to vacuum :(");
                     return;
                 }
                 GameObject target = info.customers_in_range[0];
@@ -148,112 +148,10 @@ public class Player : MonoBehaviour {
         attack_cooldown_remaining = info.cooldown;
     }
 
-    void on_switch_weapon() {
-        Debug.Log("Swap weapon!");
-        Array weapons = Enum.GetValues(typeof(Weapon));
-        int number_of_weapons = weapons.Length;
-        int current_weapon = 0;
-        int i = 0;
-        foreach (Weapon wep in weapons) {
-            if (weapon == wep) {
-                current_weapon = i;
-                break;
-            }
-            i += 1;
-        }
-        weapon = (Weapon)weapons.GetValue((current_weapon + 1) % number_of_weapons);
+    public void switch_to_weapon(Weapon weapon) {
+        Debug.Log("Swap weapon to " + weapon);
+        this.weapon = weapon;
         animator.SetInteger("weapon", (int) weapon);
         animator.SetBool("change_weapon", true);
-    }
-
-    void handle_input() {
-        // Up
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            if (! Input.GetKey(KeyCode.DownArrow)) {
-                vy = move_speed;
-                transform.up = Vector3.up;
-            } else {
-                vy = 0.0f;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.UpArrow)) {
-            if (! Input.GetKey(KeyCode.DownArrow)) {
-                vy = 0.0f;
-            } else {
-                vy = -move_speed;
-                transform.up = Vector3.down;
-            }
-        }
-
-        // Down
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            if (! Input.GetKey(KeyCode.UpArrow)) {
-                vy = -move_speed;
-                transform.up = Vector3.down;
-            } else {
-                vy = 0.0f;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.DownArrow)) {
-            if (! Input.GetKey(KeyCode.UpArrow)) {
-                vy = 0.0f;
-            } else {
-                vy = move_speed;
-                transform.up = Vector3.up;
-            }
-        }
-
-        // Right
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            if (! Input.GetKey(KeyCode.LeftArrow)) {
-                vx = move_speed;
-                transform.up = Vector3.right;
-            } else {
-                vx = 0.0f;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.RightArrow)) {
-            if (! Input.GetKey(KeyCode.LeftArrow)) {
-                vx = 0.0f;
-            } else {
-                vx = -move_speed;
-                transform.up = Vector3.left;
-            }
-        }
-
-        // Left
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            if (! Input.GetKey(KeyCode.RightArrow)) {
-                vx = -move_speed;
-                transform.up = Vector3.left;
-            } else {
-                vx = 0.0f;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftArrow)) {
-            if (! Input.GetKey(KeyCode.RightArrow)) {
-                vx = 0.0f;
-            } else {
-                vx = move_speed;
-                transform.up = Vector3.right;
-            }
-        }
-
-        // Attack
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (attack_cooldown_remaining <= 0) {
-                on_attack();
-                //Debug.Log("ATTACK!");
-            }
-        }
-
-        // Switch weapon
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            on_switch_weapon();
-        }
     }
 }
