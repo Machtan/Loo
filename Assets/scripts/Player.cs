@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
     public Weapon weapon = Weapon.Broom;
     public GameObject current_stall;
     public GameObject spray;
+    public GameObject smack;
     public float broom_push_force = 3;
     //public Sprite stand;
 
@@ -109,6 +110,13 @@ public class Player : MonoBehaviour {
                     customer.GetComponent<Animator>().SetBool("stunned", true);
                     Vector2 push_force = (new Vector2(transform.up.x, transform.up.y)).normalized * broom_push_force;
                     customer.GetComponent<Rigidbody2D>().AddForce(push_force);
+                    customer.GetComponent<Customer>().fully_entered = true;
+                    Vector3 pos = customer.transform.position;
+                    Vector3 dist = pos - transform.position;
+                    Vector3 smack_pos = transform.position + dist / 2;
+                    GameObject new_smack = Instantiate(smack);
+                    new_smack.transform.position = smack_pos;
+                    new_smack.transform.up = dist.normalized;
                 }
                 info.customers_in_range.Clear();
                 if (current_stall != null) {
@@ -121,16 +129,18 @@ public class Player : MonoBehaviour {
                 GameObject new_spray = Instantiate(spray);
                 new_spray.transform.position = transform.FindChild("spray_attack_area").transform.position;
                 new_spray.transform.up = transform.up;
+                new_spray.transform.parent = transform.FindChild("spray_attack_area").transform;
 
                 foreach (GameObject customer in info.customers_in_range) {
                     customer.GetComponent<Customer>().stun_time_remaining = info.stun_time;
+                    customer.GetComponent<Customer>().fully_entered = true;
                     customer.GetComponent<Animator>().SetBool("stunned", true);
                 }
 
                 break;
             }
         case Weapon.Vacuum: {
-                Debug.Log("Vooooooooooooom");
+                //Debug.Log("Vooooooooooooom");
                 if (info.customers_in_range.Count == 0) {
                     Debug.Log("No customer to vacuum :(");
                     return;

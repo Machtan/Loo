@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum Side {
+    Left,
+    Right,
+}
+
 public class Customer : MonoBehaviour {
 
     public Sprite stand;
@@ -12,13 +17,18 @@ public class Customer : MonoBehaviour {
     public float vy = 0.0f;
     public bool finished = false;
     public float stun_time_remaining = 0;
+    public GameObject waypoint;
+    public bool fully_entered = false;
+    public Side field_side;
 
     protected new SpriteRenderer renderer;
     protected new Rigidbody2D rigidbody;
     protected Animator animator;
+    protected float middle_x;
 
 	// Use this for initialization
 	void Start () {
+        middle_x = GameObject.FindGameObjectWithTag("middle").transform.position.x;
         animator = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
@@ -29,10 +39,17 @@ public class Customer : MonoBehaviour {
         }
         animator.SetBool("gender_set", true);
 
-        GameObject[] destinations = GameObject.FindGameObjectsWithTag("stall_clean");
-        if (destinations.Length != 0) {
-            stall_destination = destinations[Random.Range(0, destinations.Length)];
-            destination = stall_destination;
+        // Assign the customer a waypoint to go to
+        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("waypoint");
+        if (waypoints.Length != 0) {
+            int side = Random.Range(0, waypoints.Length);
+            waypoint = waypoints[side];
+            if (waypoint.transform.position.x < middle_x) {
+                field_side = Side.Left;
+            } else {
+                field_side = Side.Right;
+            }
+            destination = waypoint;
         }
 	}
 
@@ -47,9 +64,53 @@ public class Customer : MonoBehaviour {
         }
         script.remove_customer_from_attack_areas(gameObject);
     }
+
+    public void target_nearest_clean_stall() {
+        GameObject[] clean_stalls = GameObject.FindGameObjectsWithTag("stall_clean");
+        if (clean_stalls.Length != 0) {
+            bool found = false;
+            GameObject closest = null;
+            float distance = 0;
+            foreach (var stall in clean_stalls) {
+                // The stall is on the other side of the field
+                if ((field_side == Side.Right == stall.transform.position.x < middle_x) 
+                    || (field_side == Side.Left == stall.transform.position.x > middle_x)) {
+                    continue;
+                }
+                float stall_distance = (stall.transform.position - transform.position).magnitude;
+                if (! found) {
+                    found = true;
+                    distance = stall_distance;
+                    closest = stall;
+                } else if (stall_distance < distance) {
+                    distance = stall_distance;
+                    closest = stall;
+                }
+            }
+            if (found) {
+                stall_destination = closest;
+                destination = stall_destination; 
+            } else {
+                closest = clean_stalls[0];
+                distance = (closest.transform.position - transform.position).magnitude;
+                foreach (var stall in clean_stalls) {
+                    // Don't check the side this time
+                    float stall_distance = (stall.transform.position - transform.position).magnitude;
+                    if (stall_distance < distance) {
+                        distance = stall_distance;
+                        closest = stall;
+                    }
+                }
+                stall_destination = closest;
+                destination = stall_destination; 
+            }
+
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        // Check if the customer is stunned
         if (stun_time_remaining > 0) {
             stun_time_remaining -= Time.deltaTime;
             if (stun_time_remaining <= 0) {
@@ -58,17 +119,23 @@ public class Customer : MonoBehaviour {
             return;
         }
 
-        if ((! finished) && (stall_destination != null) && (! stall_destination.CompareTag("stall_clean"))) {
-            GameObject[] destinations = GameObject.FindGameObjectsWithTag("stall_clean");
-            if (destinations.Length != 0) {
-                stall_destination = destinations[Random.Range(0, destinations.Length)];
-                destination = stall_destination;
-            }
+        // Set the field side
+        if (transform.position.x < middle_x) {
+            field_side = Side.Left;
+        } else {
+            field_side = Side.Right;
+        }
+
+        // Check the target
+        if ((! finished) && fully_entered) {
+            // Ensure that the target stall isn't filthy
+            target_nearest_clean_stall();
         }
         if (destination == null) {
             return;
         }
-        
+
+        // Move
         float delta = Time.deltaTime;
         Vector3 direction = (destination.transform.position - transform.position).normalized;
         if (! finished) {

@@ -5,6 +5,8 @@ public class CleanStall : MonoBehaviour {
 
     public GameObject filty_stall;
     public float cooldown = 5;
+    public Sprite in_use_sprite;
+
     protected GameObject customer;
     protected float elapsed = 0;
     protected GameObject stall;
@@ -49,6 +51,7 @@ public class CleanStall : MonoBehaviour {
             GameObject destination = collider.gameObject.GetComponent<Customer>().destination;
             if (destination == gameObject) {
                 //Debug.Log("CUSTOMER ENTERS CLEAN STALL!");
+                stall.GetComponent<SpriteRenderer>().sprite = in_use_sprite;
                 GameObject.FindGameObjectWithTag("door").GetComponent<Door>().active -= 1;
                 customer = collider.gameObject;
                 customer_was_male = customer.GetComponent<Animator>().GetBool("is_male");
