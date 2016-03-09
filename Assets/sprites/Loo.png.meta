@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0df3b825dab4b4445a8b6b70a55ac467
-timeCreated: 1457016240
+guid: b35405a1738354c20b4dca8874a1b66b
+timeCreated: 1457518772
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,6 +23,7 @@ TextureImporter:
     21300032: Loo_16
     21300034: Loo_17
     21300036: Loo_18
+    21300038: Loo_19
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -299,10 +300,22 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
+      - - {x: 11, y: -12}
+        - {x: 11, y: -15}
+        - {x: 12, y: -16}
         - {x: 16, y: -16}
-        - {x: 16, y: 16}
+        - {x: 16, y: -10}
+        - {x: 13, y: -10}
+      - - {x: 13, y: -3}
+        - {x: 15, y: -5}
+        - {x: 16, y: -5}
+        - {x: 16, y: 0}
+        - {x: 14, y: 0}
+      - - {x: 13, y: 2}
+        - {x: 15, y: 0}
+        - {x: 16, y: 0}
+        - {x: 16, y: 6}
+        - {x: 13, y: 5}
     - name: Loo_13
       rect:
         serializedVersion: 2
@@ -340,23 +353,35 @@ TextureImporter:
     - name: Loo_15
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 192
+        y: 96
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 15, y: -16}
-        - {x: 15, y: 16}
-        - {x: -16, y: 16}
-        - {x: -16, y: -16}
+      - - {x: 11, y: -12}
+        - {x: 11, y: -15}
+        - {x: 12, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: -10}
+        - {x: 13, y: -10}
+      - - {x: 13, y: -3}
+        - {x: 15, y: -5}
+        - {x: 16, y: -5}
+        - {x: 16, y: 0}
+        - {x: 14, y: 0}
+      - - {x: 13, y: 2}
+        - {x: 15, y: 0}
+        - {x: 16, y: 0}
+        - {x: 16, y: 6}
+        - {x: 13, y: 5}
     - name: Loo_16
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -371,7 +396,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -385,6 +410,21 @@ TextureImporter:
     - name: Loo_18
       rect:
         serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 15, y: -16}
+        - {x: 15, y: 16}
+        - {x: -16, y: 16}
+        - {x: -16, y: -16}
+    - name: Loo_19
+      rect:
+        serializedVersion: 2
         x: 32
         y: 0
         width: 32
@@ -393,10 +433,10 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
+      - - {x: 15, y: -16}
+        - {x: 15, y: 16}
+        - {x: -16, y: 16}
         - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
     outline: []
   spritePackingTag: 
   userData: 

@@ -8,6 +8,7 @@ public class CleanStall : MonoBehaviour {
     protected GameObject customer;
     protected float elapsed = 0;
     protected GameObject stall;
+    protected bool customer_was_male;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,7 @@ public class CleanStall : MonoBehaviour {
 	void Update () {
         if (customer != null) {
             elapsed += Time.deltaTime;
-            if (elapsed >= cooldown) {
+            if (elapsed >= cooldown) { // The customer is done with the stall
                 GameObject filthy = GameObject.Instantiate(filty_stall);
 
                 filthy.transform.position = stall.transform.position;
@@ -26,9 +27,10 @@ public class CleanStall : MonoBehaviour {
 
                 customer.SetActive(true);
 
-                filthy.GetComponent<FilthyStall>().used_by_female = 
-                    ! customer.GetComponent<Animator>().GetBool("is_male");
-                
+                filthy.GetComponent<FilthyStall>().used_by_female = ! customer_was_male;
+                customer.GetComponent<Animator>().SetBool("is_male", customer_was_male);
+                customer.GetComponent<Animator>().SetBool("gender_set", true);
+
                 customer.transform.position = transform.position;
                 customer.transform.up = stall.transform.up * -1;
                 customer.GetComponent<Customer>().finished = true;
@@ -49,6 +51,7 @@ public class CleanStall : MonoBehaviour {
                 Debug.Log("CUSTOMER ENTERS CLEAN STALL!");
                 GameObject.FindGameObjectWithTag("door").GetComponent<Door>().active -= 1;
                 customer = collider.gameObject;
+                customer_was_male = customer.GetComponent<Animator>().GetBool("is_male");
                 customer.SetActive(false);
                 elapsed = 0;
                 gameObject.tag = "stall_filthy";

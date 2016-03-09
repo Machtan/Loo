@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: 64724f197e199494e827b14bdfa29023
-timeCreated: 1456922656
+guid: d80a1e7b23148478aaf9fb74aaaab455
+timeCreated: 1457345769
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: topdown_0
-    21300002: topdown_1
-    21300004: topdown_2
-    21300006: topdown_3
+    21300000: spray_attack_0
+    21300002: spray_attack_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -54,7 +52,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: topdown_0
+    - name: spray_attack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -65,15 +63,16 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: -3}
-        - {x: -13, y: -4}
-        - {x: -4, y: -6}
-        - {x: 11, y: -6}
-        - {x: 16, y: -4}
-        - {x: 16, y: 16}
-        - {x: -10, y: 16}
-        - {x: -16, y: 15}
-    - name: topdown_1
+      - - {x: -3, y: 16}
+        - {x: -12, y: 2}
+        - {x: -12, y: -3}
+        - {x: -10, y: -7}
+        - {x: -5, y: -9}
+        - {x: 0, y: -9}
+        - {x: 11, y: -1}
+        - {x: 11, y: 6}
+        - {x: 6, y: 16}
+    - name: spray_attack_1
       rect:
         serializedVersion: 2
         x: 32
@@ -84,49 +83,13 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -5, y: 16}
-        - {x: -8, y: 10}
-        - {x: -8, y: -15}
-        - {x: -6, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
-    - name: topdown_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15, y: 8}
-        - {x: -16, y: 7}
-        - {x: -16, y: -14}
-        - {x: -14, y: -15}
-        - {x: 16, y: -15}
-        - {x: 16, y: 8}
-    - name: topdown_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -14, y: 16}
-        - {x: -16, y: 12}
-        - {x: -16, y: 8}
-        - {x: -15, y: 6}
-        - {x: -16, y: -9}
-        - {x: -15, y: -16}
-        - {x: 5, y: -16}
-        - {x: 7, y: -9}
-        - {x: 7, y: 16}
+      - - {x: -12, y: -2}
+        - {x: -3, y: -9}
+        - {x: 1, y: -9}
+        - {x: 11, y: -2}
+        - {x: 11, y: 13}
+        - {x: 2, y: 13}
+        - {x: -12, y: 4}
     outline: []
   spritePackingTag: 
   userData: 
