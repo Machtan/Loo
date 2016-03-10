@@ -30,6 +30,7 @@ public class FilthyStall : MonoBehaviour {
         GameObject new_stall = Instantiate(clean_stall);
         new_stall.transform.position = transform.position;
         new_stall.transform.up = transform.up;
+        new_stall.transform.parent = transform.parent;
         Destroy(gameObject);
     }
 

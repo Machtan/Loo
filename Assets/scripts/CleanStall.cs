@@ -5,8 +5,9 @@ public class CleanStall : MonoBehaviour {
 
     public GameObject filty_stall;
     public float cooldown = 5;
-    public Sprite in_use_sprite;
+    public GameObject in_use_object;
 
+    protected GameObject in_use_instance;
     protected GameObject customer;
     protected float elapsed = 0;
     protected GameObject stall;
@@ -26,6 +27,7 @@ public class CleanStall : MonoBehaviour {
 
                 filthy.transform.position = stall.transform.position;
                 filthy.transform.up = stall.transform.up;
+                filthy.transform.parent = stall.transform.parent;
 
                 customer.SetActive(true);
 
@@ -37,8 +39,11 @@ public class CleanStall : MonoBehaviour {
                 customer.transform.up = stall.transform.up * -1;
                 customer.GetComponent<Customer>().finished = true;
                 customer.GetComponent<Customer>().destination = GameObject.FindGameObjectWithTag("door");
+                customer.layer = 11; // "finished_customer"
                 customer = null;
 
+                Destroy(in_use_instance);
+                in_use_object = null;
                 Destroy(stall);
             }
         }
@@ -51,7 +56,8 @@ public class CleanStall : MonoBehaviour {
             GameObject destination = collider.gameObject.GetComponent<Customer>().destination;
             if (destination == gameObject) {
                 //Debug.Log("CUSTOMER ENTERS CLEAN STALL!");
-                stall.GetComponent<SpriteRenderer>().sprite = in_use_sprite;
+                in_use_instance = Instantiate(in_use_object);
+                in_use_instance.transform.position = stall.transform.position;
                 GameObject.FindGameObjectWithTag("door").GetComponent<Door>().active -= 1;
                 customer = collider.gameObject;
                 customer_was_male = customer.GetComponent<Animator>().GetBool("is_male");

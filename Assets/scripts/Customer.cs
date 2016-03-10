@@ -66,7 +66,7 @@ public class Customer : MonoBehaviour {
     }
 
     public void target_nearest_clean_stall() {
-        GameObject[] clean_stalls = GameObject.FindGameObjectsWithTag("stall_clean");
+        GameObject[] clean_stalls = GameObject.FindGameObjectsWithTag("clean_door");
         if (clean_stalls.Length != 0) {
             bool found = false;
             GameObject closest = null;
